@@ -5,3 +5,36 @@
 ---
 
 ## 📁 Project Structure
+
+---
+
+## 🔧 Features
+
+- 🧾 **Authentication**
+  - User Registration
+  - Login with JWT
+  - Protected routes
+
+- 🔌 **Charging Station Management**
+  - Create a new station
+  - Edit station details
+  - Delete station
+  - List all stations with filters
+
+- 🗺️ **Map Integration**
+  - View stations on Google Maps or OpenStreetMap
+  - Clickable markers to show charger details
+
+---
+
+## 📍 Station Details
+
+Each charging station contains the following fields:
+
+- **Name** – Charger name
+- **Location** – Latitude & Longitude
+- **Status** – Active / Inactive
+- **Power Output** – in kW
+- **Connector Type** – Type of connector used
+
+---
