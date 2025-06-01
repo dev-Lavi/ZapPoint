@@ -1,4 +1,3 @@
-
 <template>
   <div class="auth-page">
     <div class="auth-card">
@@ -11,6 +10,8 @@
           placeholder="Email"
           class="auth-input"
           required
+          pattern="^[\\w.-]+@[\\w.-]+\\.\\w{2,}$"
+          title="Please enter a valid email address"
         />
         <input
           v-model="password"
@@ -18,6 +19,7 @@
           placeholder="Password"
           class="auth-input"
           required
+          title="Password must be at least 8 characters long and include at least one letter and one number"
         />
         <button type="submit" class="auth-button">Register</button>
       </form>

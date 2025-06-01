@@ -1,3 +1,4 @@
+
 <template>
   <div class="auth-page">
     <div class="auth-card">
@@ -43,12 +44,26 @@ const handleLogin = async () => {
       email: email.value,
       password: password.value,
     })
-    const token = response.data.token
-    localStorage.setItem('token', token)
-    router.push('/')
+    
+    // FIX: Token is inside user object, not at root level
+    const token = response.data.user.token;
+    
+    // Store token and user data
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+    
+    router.push('/dashboard');
   } catch (err) {
-    alert('Login failed!')
-    console.error(err)
+    // Improved error handling
+    let errorMessage = 'Login failed';
+    if (err && typeof err === 'object' && 'response' in err) {
+      const response = (err as any).response;
+      errorMessage = response?.data?.message || errorMessage;
+      console.error('Login error:', response);
+    } else {
+      console.error('Login error:', err);
+    }
+    alert(`Error: ${errorMessage}`);
   }
 }
 </script>

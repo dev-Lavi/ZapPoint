@@ -1,85 +1,95 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+<script setup>
+import { RouterView, useRoute, RouterLink } from 'vue-router'
+import { computed } from 'vue'
+
+const route = useRoute()
+
+// Show header only on login or register routes
+const showHeader = computed(() => ['login', 'register'].includes(route.name))
 </script>
 
 <template>
-  <header>
-    <img alt="ZapPoint Logo" class="logo" src="/zappoint-logo.png" width="125" height="125" />
+  <div class="app-wrapper">
+    <header v-if="showHeader" class="app-header">
+      <img alt="ZapPoint Logo" class="logo" src="/zappoint-logo.png" width="100" />
 
-    <div class="wrapper">
-      <h1>Welcome to ZapPoint</h1>
+      <div class="nav-content">
+        <h1>Welcome to <span class="brand">ZapPoint</span></h1>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-      </nav>
-    </div>
-  </header>
+        <nav>
+          <RouterLink to="/register">Register</RouterLink>
+          <RouterLink to="/login">Login</RouterLink>
+        </nav>
+      </div>
+    </header>
 
-  <RouterView />
+    <main class="app-main">
+      <RouterView />
+    </main>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app-wrapper {
+  background: linear-gradient(to bottom right, #f6fcff, #ecf9f1);
+  min-height: 100vh;
+  color: #1f3b2d;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #d0e5d9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
 }
 
 .logo {
-  display: block;
-  margin: 0 auto 2rem;
+  height: 64px;
+  width: auto;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+.nav-content {
+  flex: 1;
+  text-align: right;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.nav-content h1 {
+  font-size: 1.8rem;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.brand {
+  color: #7c3aed;
 }
 
 nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  margin-left: 1rem;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  transition: background 0.3s ease;
 }
 
-nav a:first-of-type {
-  border: 0;
+nav a:hover {
+  background-color: #ede9fe;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.app-main {
+  padding: 2rem;
 }
 </style>
