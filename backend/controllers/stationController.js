@@ -20,9 +20,11 @@ export const createStation = async (req, res) => {
 
 export const getStations = async (req, res) => {
   try {
-    const stations = await Station.find({ createdBy: req.user.id })
-    res.json(stations)
+    const stations = await Station.find({})
+    res.status(200).json(stations)
+    console.log('Fetching stations for user:', req.user)
   } catch (err) {
+    console.error('Error fetching stations:', err.message)
     res.status(500).json({ message: 'Error fetching stations' })
   }
 }
