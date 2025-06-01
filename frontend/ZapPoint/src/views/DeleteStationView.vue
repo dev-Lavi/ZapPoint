@@ -71,7 +71,7 @@ const deleteStation = async () => {
   }
 
   try {
-    const response = await fetch(`http://localhost:5000/api/stations/${stationId.value}`, {
+    const response = await fetch(`https://zappoint.onrender.com/api/stations/${stationId.value}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

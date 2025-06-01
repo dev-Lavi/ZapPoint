@@ -1,74 +1,95 @@
 <template>
-  <div id="map" class="h-screen w-full"></div>
+  <div class="map-view">
+    <!-- Hamburger for Mobile -->
+    <div class="hamburger" @click="toggleSidebar">
+      ☰
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" :class="{ show: isSidebarVisible }">
+      <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
+      <nav>
+        <RouterLink to="/dashboard" class="nav-item">
+          <i class="icon-dashboard" /> Dashboard
+        </RouterLink>
+        <RouterLink to="/" class="nav-item">
+          <i class="icon-home" /> Home
+        </RouterLink>
+        <RouterLink to="/map" class="nav-item active">
+          <i class="icon-home" /> Location
+        </RouterLink>
+        <RouterLink to="/create" class="nav-item">
+          <i class="icon-create" /> Create Station
+        </RouterLink>
+        <RouterLink to="/update" class="nav-item">
+          <i class="icon-update" /> Update Station
+        </RouterLink>
+        <RouterLink to="/delete" class="nav-item">
+          <i class="icon-delete" /> Delete Station
+        </RouterLink>
+      </nav>
+    </aside>
+
+    <!-- Map Container -->
+    <div id="map" class="map-container"></div>
+  </div>
 </template>
 
+
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// Fix for Leaflet marker icons
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+const isSidebarVisible = ref(false)
+
+const toggleSidebar = () => {
+  isSidebarVisible.value = !isSidebarVisible.value
+}
+
+// Custom ZapPoint icon
+const customIcon = L.icon({
+  iconUrl: '/zappoint-marker.png', // Make sure this icon exists in `public/`
+  iconSize: [35, 45],
+  iconAnchor: [17, 45],
+  popupAnchor: [0, -45],
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
-});
+  shadowSize: [41, 41],
+  shadowAnchor: [13, 41]
+})
 
 onMounted(async () => {
-  // Initialize map
   const map = L.map('map').setView([20.5937, 78.9629], 5)
-  
-  // Add tile layer
+
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map)
 
   try {
-    // Fetch stations from API
-    const token = localStorage.getItem('authToken');
-    const res = await fetch('http://localhost:5000/api/stations', {
+    const token = localStorage.getItem('authToken')
+    const res = await fetch('https://zappoint.onrender.com/api/stations', {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
-    });
-    
-    if (!res.ok) {
-      throw new Error(`API error: ${res.status} - ${res.statusText}`);
-    }
-    
-    const responseData = await res.json();
-    console.log('API response data:', responseData);
-    
-    // Handle different response formats
-    let stations = [];
-    if (Array.isArray(responseData)) {
-      stations = responseData;
-    } else if (Array.isArray(responseData.stations)) {
-      stations = responseData.stations;
-    } else if (responseData.data && Array.isArray(responseData.data)) {
-      stations = responseData.data;
-    } else {
-      throw new Error('Unexpected API response format');
-    }
-    
-    console.log('Processed stations:', stations);
+    })
 
-    // Create markers for each station
+    const responseData = await res.json()
+    const stations = Array.isArray(responseData)
+      ? responseData
+      : responseData?.stations || responseData?.data || []
+
     stations.forEach(station => {
-      // Check if station has valid location data
       if (
         station.location &&
         typeof station.location.latitude === 'number' &&
         typeof station.location.longitude === 'number'
       ) {
-        const marker = L.marker([
-          station.location.latitude, 
-          station.location.longitude
-        ]).addTo(map);
+        const marker = L.marker(
+          [station.location.latitude, station.location.longitude],
+          { icon: customIcon }
+        ).addTo(map)
 
-        // Create popup content
         const popupContent = `
           <div style="min-width: 200px">
             <b>${station.name}</b><br>
@@ -76,36 +97,110 @@ onMounted(async () => {
             Power: ${station.powerOutput} kW<br>
             Connector: ${station.connectorType}
           </div>
-        `;
-
-        // Bind popup to marker
-        marker.bindPopup(popupContent);
-      } else {
-        console.warn('Station has invalid location data:', station);
+        `
+        marker.bindPopup(popupContent)
       }
-    });
+    })
   } catch (err) {
-    console.error('Failed to load stations:', err);
+    console.error('Failed to load stations:', err)
   }
-});
+})
 </script>
 
-<style>
-#map {
+<style scoped>
+.map-view {
+  display: flex;
   height: 100vh;
-  width: 100%;
+  overflow: hidden;
+}
+
+/* Sidebar styles */
+.sidebar {
+  width: 240px;
+  background-color: #1e293b;
+  color: white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Logo */
+.logo {
+  padding-left: 1rem;
+  width: 130px;
+  margin-bottom: 2rem;
+}
+
+/* Navigation items */
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: #334155;
+}
+
+.nav-item i {
+  margin-right: 0.5rem;
+}
+
+/* Map container */
+.map-container {
+  flex: 1;
   z-index: 1;
 }
 
-/* Optional: Add loading spinner */
-#map::before {
-  content: "Loading map...";
+/* Hamburger styles */
+.hamburger {
+  display: none;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  color: #666;
-  font-size: 1.2rem;
+  top: 1rem;
+  left: 1rem;
+  z-index: 20;
+  font-size: 2rem;
+  color: white;
+  background: #1e293b;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .map-view {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 10;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .map-container {
+    height: 100vh;
+    width: 100%;
+  }
+
+  .hamburger {
+    display: block;
+    top: 50%;
+  }
 }
 </style>

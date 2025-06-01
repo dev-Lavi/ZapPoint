@@ -85,7 +85,7 @@ const fetchStation = async () => {
   const token = localStorage.getItem('authToken')
 
   try {
-    const response = await fetch(`http://localhost:5000/api/stations/${stationId.value}`, {
+    const response = await fetch(`https://zappoint.onrender.com/api/stations/${stationId.value}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'

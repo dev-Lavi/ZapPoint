@@ -42,7 +42,7 @@ const router = useRouter()
 
 const handleRegister = async () => {
   try {
-    await axios.post('http://localhost:5000/api/auth/register', {
+    await axios.post('https://zappoint.onrender.com/api/auth/register', {
       email: email.value,
       password: password.value,
     })
