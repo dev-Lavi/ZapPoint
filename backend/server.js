@@ -11,7 +11,7 @@ import https from 'https';
 
 setInterval(() => {
   https.get('https://zappoint.onrender.com/ping');
-}, 1 * 60 * 1000); 
+}, 9 * 60 * 1000); 
 
 dotenv.config();
 const app = express();
