@@ -145,18 +145,22 @@ const updateStation = async () => {
 .dashboard-view {
   display: flex;
   font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  flex-direction: row;
 }
+
 .sidebar {
   width: 250px;
   background: #fff;
   padding: 1.5rem;
   border-right: 1px solid #eee;
-  height: 100vh;
 }
+
 .logo {
   width: 140px;
   margin-bottom: 2rem;
 }
+
 .nav-item {
   display: flex;
   align-items: center;
@@ -164,9 +168,11 @@ const updateStation = async () => {
   color: #333;
   text-decoration: none;
 }
+
 .nav-item.active {
   color: #a855f7;
 }
+
 .dashboard-content {
   flex: 1;
   padding: 2rem;
@@ -192,7 +198,7 @@ const updateStation = async () => {
 }
 .form-group input,
 .form-group select {
-  width: 100%;
+  width: 90%;
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -233,4 +239,46 @@ const updateStation = async () => {
   color: red;
   font-weight: 500;
 }
+
+@media (max-width: 768px) {
+  .dashboard-view {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .nav-item {
+    flex: 1 1 45%;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .station-form {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-item {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
+
 </style>

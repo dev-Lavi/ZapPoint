@@ -156,14 +156,16 @@ const createStation = async () => {
 .dashboard-view {
   display: flex;
   font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  flex-direction: row;
 }
 
+/* Sidebar */
 .sidebar {
   width: 250px;
   background: #fff;
   padding: 1.5rem;
   border-right: 1px solid #eee;
-  height: 100vh;
 }
 
 .logo {
@@ -183,6 +185,7 @@ const createStation = async () => {
   color: #a855f7;
 }
 
+/* Main Content */
 .dashboard-content {
   flex: 1;
   padding: 2rem;
@@ -199,6 +202,7 @@ const createStation = async () => {
   border-radius: 12px;
   max-width: 500px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 100%;
 }
 
 .form-group {
@@ -228,6 +232,7 @@ const createStation = async () => {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
+  width: 100%;
 }
 
 .message {
@@ -239,18 +244,59 @@ const createStation = async () => {
 .message-id {
   display: block;
   margin-top: 0.5rem;
-  color: #4f46e5; /* Indigo */
+  color: #4f46e5;
   font-weight: bold;
   background: #eef2ff;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  word-break: break-all;
+  word-break: break-word;
 }
-
 
 .error {
   margin-top: 1rem;
   color: red;
   font-weight: 500;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dashboard-view {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .nav-item {
+    flex: 1 1 45%;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .station-form {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-item {
+    flex: 1 1 100%;
+    text-align: center;
+  }
 }
 </style>

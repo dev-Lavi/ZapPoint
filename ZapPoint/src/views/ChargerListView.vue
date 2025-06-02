@@ -388,15 +388,95 @@ onMounted(fetchStations)
   gap: 15px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .filters {
-    flex-wrap: wrap;
-  }
-  
-  .dashboard-header {
+/* Base adjustments */
+.dashboard-view {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  transition: all 0.3s ease;
+}
+
+/* Responsive Layout for Tablets and Below */
+@media (max-width: 1024px) {
+  .dashboard-view {
     flex-direction: column;
-    align-items: stretch;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-item {
+    justify-content: center;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .summary-boxes {
+    flex-direction: column;
+  }
+
+  .graphs {
+    flex-direction: column;
+  }
+
+  .station-list ul {
+    padding: 0.5rem;
+  }
+}
+
+/* Responsive Layout for Mobile */
+@media (max-width: 600px) {
+  .search-bar {
+    width: 100%;
+  }
+
+  .filters {
+    flex-direction: column;
+    margin: 1rem 0;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .profile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .station-details {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .station-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .status-active, .status-inactive {
+    align-self: flex-end;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
   }
 }
 </style>
