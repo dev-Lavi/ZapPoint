@@ -7,6 +7,11 @@ import logger from './middleware/logger.js';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import stationRoutes from './routes/stationRoutes.js';
+import https from 'https';
+
+setInterval(() => {
+  https.get('https://zappoint.onrender.com/ping');
+}, 1 * 60 * 1000); 
 
 dotenv.config();
 const app = express();
@@ -35,6 +40,10 @@ app.use(limiter);
 // Health check route
 app.get('/', (req, res) => {
   res.send('ZapPoint API is running...');
+});
+
+app.get('/ping', (req, res) => {
+  res.send('pong');
 });
 
 // Routes
