@@ -1,6 +1,12 @@
-<template>
+<template>  
   <div class="dashboard-view">
-    <aside class="sidebar">
+    <!-- Hamburger Toggle -->
+    <button class="hamburger" @click="isSidebarOpen = !isSidebarOpen">
+      ☰
+    </button>
+
+    <!-- Sidebar -->
+    <aside :class="['sidebar', { 'open': isSidebarOpen }]">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>
         <RouterLink to="/dashboard" class="nav-item">
@@ -24,6 +30,7 @@
       </nav>
     </aside>
 
+    <!-- Main Content -->
     <main class="dashboard-content">
       <div class="dashboard-header">
         <h2>Update Charging Station</h2>
@@ -33,13 +40,6 @@
         <div class="form-group">
           <label>Station ID</label>
           <input v-model="stationId" type="text" placeholder="Enter station ID" required />
-          <!-- <button @click.prevent="fetchStation" class="load-btn">Load Station</button> -->
-        </div>
-
-        <div v-if="station.name" class="station-preview">
-          <p><strong>Name:</strong> {{ station.name }}</p>
-          <p><strong>Connector Type:</strong> {{ station.connectorType }}</p>
-          <p><strong>Location:</strong> {{ station.location.latitude }}, {{ station.location.longitude }}</p>
         </div>
 
         <div class="form-group">
@@ -67,44 +67,16 @@
 <script setup>
 import { ref } from 'vue'
 
+const isSidebarOpen = ref(false)
+
 const stationId = ref('')
 const form = ref({
   status: 'Inactive',
   powerOutput: ''
 })
 
-const station = ref({})
 const message = ref('')
 const error = ref('')
-
-const fetchStation = async () => {
-  error.value = ''
-  message.value = ''
-  station.value = {}
-
-  const token = localStorage.getItem('authToken')
-
-  try {
-    const response = await fetch(`https://zappoint.onrender.com/api/stations/${stationId.value}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(errorText || 'Failed to fetch station')
-    }
-
-    const data = await response.json()
-    station.value = data
-    form.value.status = data.status
-    form.value.powerOutput = data.powerOutput
-  } catch (err) {
-    error.value = err.message
-  }
-}
 
 const updateStation = async () => {
   error.value = ''
@@ -117,7 +89,7 @@ const updateStation = async () => {
   }
 
   try {
-    const response = await fetch(`http://localhost:5000/api/stations/${stationId.value}`, {
+    const response = await fetch(`https://zappoint.onrender.com/api/stations/${stationId.value}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -240,44 +212,47 @@ const updateStation = async () => {
   font-weight: 500;
 }
 
+.hamburger {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  display: none;
+}
+
+.sidebar {
+  width: 250px;
+  background: #fff;
+  padding: 1.5rem;
+  border-right: 1px solid #eee;
+  transition: transform 0.3s ease;
+}
+
 @media (max-width: 768px) {
-  .dashboard-view {
-    flex-direction: column;
+  .hamburger {
+    display: block;
   }
 
   .sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    z-index: 1000;
   }
 
-  .nav-item {
-    flex: 1 1 45%;
-    justify-content: center;
-    padding: 0.5rem;
+  .sidebar.open {
+    transform: translateX(0);
   }
 
   .dashboard-content {
-    padding: 1rem;
-  }
-
-  .station-form {
     padding: 1.5rem;
-    max-width: 100%;
-  }
-
-  .submit-btn {
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-item {
-    flex: 1 1 100%;
-    text-align: center;
+    margin-left: 0;
   }
 }
 

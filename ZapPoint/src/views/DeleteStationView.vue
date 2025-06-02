@@ -1,13 +1,18 @@
 <template>
   <div class="dashboard-view">
+    <!-- Hamburger for Mobile -->
+    <button class="hamburger" @click="toggleSidebar">
+      ☰
+    </button>
+
     <!-- Sidebar Navigation -->
-    <aside class="sidebar">
+    <aside class="sidebar" :class="{ open: isSidebarOpen }">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>
         <RouterLink to="/dashboard" class="nav-item">
           <i class="icon-dashboard" /> Dashboard
         </RouterLink>
-        <RouterLink to="/" class="nav-item"> <!-- Added Home link -->
+        <RouterLink to="/" class="nav-item">
           <i class="icon-home" /> Home
         </RouterLink>
         <RouterLink to="/map" class="nav-item">
@@ -53,12 +58,19 @@
   </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue'
 
 const stationId = ref('')
 const message = ref('')
 const error = ref('')
+const isSidebarOpen = ref(false)
+
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value
+}
+
 
 const deleteStation = async () => {
   message.value = ''
@@ -186,45 +198,47 @@ const deleteStation = async () => {
   font-weight: 500;
 }
 
-/* Responsive Styles */
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: #a855f7;
+  padding: 1rem;
+  cursor: pointer;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+}
+
+/* Sidebar animation */
+.sidebar {
+  transition: transform 0.3s ease-in-out;
+}
+
 @media (max-width: 768px) {
-  .dashboard-view {
-    flex-direction: column;
+  .hamburger {
+    display: block;
   }
 
   .sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%);
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   }
 
-  .nav-item {
-    flex: 1 1 45%;
-    justify-content: center;
-    padding: 0.5rem;
+  .sidebar.open {
+    transform: translateX(0);
   }
 
   .dashboard-content {
-    padding: 1rem;
-  }
-
-  .station-form {
-    padding: 1.5rem;
-    max-width: 100%;
-  }
-
-  .submit-btn {
-    width: 100%;
+    margin-top: 3rem;
   }
 }
 
-@media (max-width: 480px) {
-  .nav-item {
-    flex: 1 1 100%;
-    text-align: center;
-  }
-}
 </style>

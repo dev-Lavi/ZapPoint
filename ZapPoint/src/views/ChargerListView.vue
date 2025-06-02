@@ -1,7 +1,14 @@
 <template>  
   <div class="dashboard-view">
+    <!-- Hamburger Icon -->
+    <div class="hamburger" @click="toggleSidebar">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
     <!-- Sidebar Navigation -->
-    <aside class="sidebar">
+    <aside :class="['sidebar', { 'collapsed': !isSidebarOpen }]">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>
         <RouterLink to="/dashboard" class="nav-item active">
@@ -129,6 +136,11 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+
+const isSidebarOpen = ref(true)
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value
+}
 
 const stations = ref([])
 const loading = ref(true)

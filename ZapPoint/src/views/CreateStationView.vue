@@ -1,27 +1,21 @@
-<template>
+
+<template> 
   <div class="dashboard-view">
+    <!-- Hamburger Button -->
+    <button class="hamburger-btn" @click="toggleSidebar">
+      <span :class="{ open: isSidebarOpen }">&#9776;</span>
+    </button>
+
     <!-- Sidebar Navigation -->
-    <aside class="sidebar">
+    <aside :class="['sidebar', { 'sidebar-open': isSidebarOpen }]">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>
-        <RouterLink to="/dashboard" class="nav-item">
-          <i class="icon-dashboard" /> Dashboard
-        </RouterLink>
-        <RouterLink to="/" class="nav-item"> <!-- Added Home link -->
-          <i class="icon-home" /> Home
-        </RouterLink>
-        <RouterLink to="/map" class="nav-item">
-          <i class="icon-home" /> Location
-        </RouterLink>
-        <RouterLink to="/create" class="nav-item active">
-          <i class="icon-create" /> Create Station
-        </RouterLink>
-        <RouterLink to="/update" class="nav-item">
-          <i class="icon-update" /> Update Station
-        </RouterLink>
-        <RouterLink to="/delete" class="nav-item">
-          <i class="icon-delete" /> Delete Station
-        </RouterLink>
+        <RouterLink to="/dashboard" class="nav-item"><i class="icon-dashboard" /> Dashboard</RouterLink>
+        <RouterLink to="/" class="nav-item"><i class="icon-home" /> Home</RouterLink>
+        <RouterLink to="/map" class="nav-item"><i class="icon-home" /> Location</RouterLink>
+        <RouterLink to="/create" class="nav-item active"><i class="icon-create" /> Create Station</RouterLink>
+        <RouterLink to="/update" class="nav-item"><i class="icon-update" /> Update Station</RouterLink>
+        <RouterLink to="/delete" class="nav-item"><i class="icon-delete" /> Delete Station</RouterLink>
       </nav>
     </aside>
 
@@ -32,6 +26,7 @@
       </div>
 
       <form @submit.prevent="createStation" class="station-form">
+        <!-- Form inputs (same as before)... -->
         <div class="form-group">
           <label>Station Name</label>
           <input v-model="form.name" type="text" placeholder="Enter station name" required />
@@ -68,20 +63,28 @@
         <button type="submit" class="submit-btn">Create Station</button>
 
         <p v-if="message" class="message">
-  {{ message }}
-  <span v-if="stationId" class="message-id">Station ID: {{ stationId }}</span>
-</p>
+          {{ message }}
+          <span v-if="stationId" class="message-id">Station ID: {{ stationId }}</span>
+        </p>
         <p v-if="error" class="error">{{ error }}</p>
       </form>
     </main>
   </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+
+const isSidebarOpen = ref(false)
+
+const toggleSidebar = () => {
+  isSidebarOpen.value = !isSidebarOpen.value
+}
+
 
 const form = ref({
   name: '',
@@ -166,6 +169,7 @@ const createStation = async () => {
   background: #fff;
   padding: 1.5rem;
   border-right: 1px solid #eee;
+  transition: all 0.3s ease;
 }
 
 .logo {
@@ -257,46 +261,54 @@ const createStation = async () => {
   color: red;
   font-weight: 500;
 }
+/* Hamburger Button */
+.hamburger-btn {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
 
-/* Responsive Styles */
-@media (max-width: 768px) {
+/* Sidebar toggle classes */
+.sidebar {
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 1024px) {
+  .hamburger-btn {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background: white;
+    z-index: 1000;
+    transform: translateX(-100%);
+    border-right: 1px solid #eee;
+    padding-top: 4rem;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
   .dashboard-view {
     flex-direction: column;
   }
 
-  .sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-
-  .nav-item {
-    flex: 1 1 45%;
-    justify-content: center;
-    padding: 0.5rem;
-  }
-
   .dashboard-content {
+    margin-top: 3rem;
     padding: 1rem;
   }
-
-  .station-form {
-    padding: 1.5rem;
-    max-width: 100%;
-  }
-
-  .submit-btn {
-    width: 100%;
-  }
 }
 
-@media (max-width: 480px) {
-  .nav-item {
-    flex: 1 1 100%;
-    text-align: center;
-  }
-}
 </style>

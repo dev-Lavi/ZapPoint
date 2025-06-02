@@ -11,6 +11,8 @@ import stationRoutes from './routes/stationRoutes.js';
 dotenv.config();
 const app = express();
 
+app.set('trust proxy', 1); // trust the first proxy
+
 // Connect to MongoDB
 connectDB();
 
