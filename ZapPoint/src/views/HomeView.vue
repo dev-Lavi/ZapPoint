@@ -7,9 +7,9 @@
       </div>
       <nav class="nav-links">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/features">Features</RouterLink>
-        <RouterLink to="/about">About us</RouterLink>
-        <RouterLink to="/app">App</RouterLink>
+        <RouterLink to="/">Features</RouterLink>
+        <RouterLink to="/">About us</RouterLink>
+        <RouterLink to="/">App</RouterLink>
       </nav>
       <div class="auth-buttons">
         <RouterLink class="btn-outline" to="/login">Sign In</RouterLink>

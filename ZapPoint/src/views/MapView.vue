@@ -200,7 +200,8 @@ onMounted(async () => {
 
   .hamburger {
     display: block;
-    top: 50%;
+    top: 5%;
+    left: 0.5%;
   }
 }
 </style>
