@@ -4,7 +4,6 @@
     <header class="navbar">
       <div class="logo">
         <img src="/zappoint-logo.png" alt="ZapPoint Logo" />
-        <span class="brand">zappoint</span>
       </div>
       <nav class="nav-links">
         <RouterLink to="/">Home</RouterLink>
@@ -14,9 +13,23 @@
       </nav>
       <div class="auth-buttons">
         <RouterLink class="btn-outline" to="/login">Sign In</RouterLink>
-        <RouterLink class="btn-filled" to="/register">Create an account</RouterLink>
+        <RouterLink class="btn-filled" to="/register">Create an Account</RouterLink>
+      </div>
+            <div class="hamburger" @click="toggleMenu">
+        &#9776;
       </div>
     </header>
+
+
+     <!-- Mobile Menu -->
+    <div class="mobile-menu" v-if="isMenuOpen">
+      <RouterLink to="/" @click="closeMenu">Home</RouterLink>
+      <RouterLink to="/features" @click="closeMenu">Features</RouterLink>
+      <RouterLink to="/about" @click="closeMenu">About us</RouterLink>
+      <RouterLink to="/app" @click="closeMenu">App</RouterLink>
+      <RouterLink class="btn-outline" to="/login" @click="closeMenu">Sign In</RouterLink>
+      <RouterLink class="btn-filled" to="/register" @click="closeMenu">Register</RouterLink>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -40,7 +53,18 @@
 
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
+
+
+const isMenuOpen = ref(false)
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+const closeMenu = () => {
+  isMenuOpen.value = false
+}
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -55,7 +79,7 @@ import { RouterLink } from 'vue-router'
 .homepage {
   background-color: #ffffff;
   color: #1a1a1a;
-  padding: 0 2rem;
+  padding: 0 1rem;
 }
 
 .navbar {
@@ -63,6 +87,7 @@ import { RouterLink } from 'vue-router'
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
+  position: relative;
 }
 
 .logo {
@@ -72,7 +97,7 @@ import { RouterLink } from 'vue-router'
 }
 
 .logo img {
-  height: 40px;
+  height: 60px;
 }
 
 .brand {
@@ -92,34 +117,37 @@ import { RouterLink } from 'vue-router'
   text-decoration: none;
 }
 
+
 .auth-buttons {
   display: flex;
   gap: 0.75rem;
 }
 
-.btn-outline {
+.btn-outline,
+.btn-filled {
   padding: 0.5rem 1rem;
-  border: 2px solid #000000;
   border-radius: 6px;
   text-decoration: none;
-  color: #000000;
   font-weight: 500;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.btn-outline {
+  border: 2px solid #000000;
+  color: #000000;
 }
 
 .btn-filled {
-  padding: 0.5rem 1rem;
   background-color: #7c3aed;
-  border-radius: 6px;
   color: #ffffff;
-  text-decoration: none;
-  font-weight: 500;
 }
 
 .hero {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4rem 0;
+  padding: 0.1rem 0;
   flex-wrap: wrap;
   gap: 2rem;
 }
@@ -150,14 +178,58 @@ import { RouterLink } from 'vue-router'
   width: 100%;
 }
 
+/* Hamburger Icon */
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.mobile-menu a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+}
+
 @media (max-width: 768px) {
+  .nav-links,
+  .auth-buttons {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-menu {
+    display: flex;
+  }
+
   .hero {
     flex-direction: column;
     text-align: center;
+    gap: 2rem;
   }
 
-  .nav-links {
-    display: none;
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+
+  .hero-image img {
+    max-width: 90%;
+    height: auto;
   }
 }
 </style>
