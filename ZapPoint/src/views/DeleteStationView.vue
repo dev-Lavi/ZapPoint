@@ -154,7 +154,6 @@ const deleteStation = async () => {
   border-radius: 12px;
   max-width: 500px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  width: 100%;
 }
 
 .form-group {
@@ -169,7 +168,7 @@ const deleteStation = async () => {
 
 .form-group input,
 .form-group select {
-  width: 100%;
+  width: 96%;
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 8px;

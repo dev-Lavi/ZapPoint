@@ -170,7 +170,7 @@ const updateStation = async () => {
 }
 .form-group input,
 .form-group select {
-  width: 90%;
+  width: 96%;
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 8px;
