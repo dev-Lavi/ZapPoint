@@ -1,6 +1,6 @@
 <template>
   <div class="homepage">
-    <!-- Navbar -->
+    
     <header class="navbar">
       <div class="logo">
         <img src="/zappoint-logo.png" alt="ZapPoint Logo" />
@@ -69,7 +69,7 @@ const closeMenu = () => {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-* {
+* { 
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
@@ -82,12 +82,13 @@ const closeMenu = () => {
   padding: 0 1rem;
 }
 
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
-  position: relative;
+  flex-wrap: wrap;
 }
 
 .logo {
@@ -97,7 +98,7 @@ const closeMenu = () => {
 }
 
 .logo img {
-  height: 60px;
+  height: 80px;
 }
 
 .brand {
@@ -116,7 +117,6 @@ const closeMenu = () => {
   color: #000000;
   text-decoration: none;
 }
-
 
 .auth-buttons {
   display: flex;
@@ -143,21 +143,23 @@ const closeMenu = () => {
   color: #ffffff;
 }
 
+
 .hero {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.1rem 0;
+  padding: 2rem 1rem; 
   flex-wrap: wrap;
   gap: 2rem;
 }
 
 .hero-text {
+  flex: 1;
   max-width: 500px;
 }
 
 .hero-text h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
   color: #1a1a1a;
@@ -173,9 +175,14 @@ const closeMenu = () => {
   color: #808080;
 }
 
-.hero-image img {
+.hero-image {
+  flex: 1;
   max-width: 500px;
+}
+
+.hero-image img {
   width: 100%;
+  height: auto;
 }
 
 /* Hamburger Icon */
@@ -199,7 +206,12 @@ const closeMenu = () => {
   font-weight: 500;
 }
 
+/* Media Queries */
 @media (max-width: 768px) {
+  .logo img {
+    height: 65px;
+  }
+
   .nav-links,
   .auth-buttons {
     display: none;
@@ -216,20 +228,40 @@ const closeMenu = () => {
   .hero {
     flex-direction: column;
     text-align: center;
-    gap: 2rem;
+    padding: 2rem 1rem;
   }
 
   .hero-text h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 
   .hero-text p {
     font-size: 1rem;
   }
 
-  .hero-image img {
-    max-width: 90%;
-    height: auto;
+  .hero-image {
+    max-width: 100%;
   }
 }
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  .hero {
+    padding: 2.5rem 3rem;
+  }
+
+  .hero-text h1 {
+    font-size: 2.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    padding: 4rem 6rem;
+  }
+
+  .hero-text h1 {
+    font-size: 3rem;
+  }
+}
+
 </style>

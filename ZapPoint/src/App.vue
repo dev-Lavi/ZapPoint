@@ -89,7 +89,4 @@ nav a:hover {
   background-color: #ede9fe;
 }
 
-.app-main {
-  padding: 2rem;
-}
 </style>
