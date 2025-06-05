@@ -12,13 +12,20 @@
           class="auth-input"
           required
         />
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Password"
-          class="auth-input"
-          required
-        />
+
+        <div class="password-wrapper">
+          <input
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+            class="auth-input"
+            required
+          />
+          <span class="toggle-eye" @click="togglePassword">
+            {{ showPassword ? '🙈' : '👁️' }}
+          </span>
+        </div>
+
         <button type="submit" class="auth-button">Login</button>
       </form>
       <p class="auth-switch">
@@ -37,6 +44,11 @@ import { useRouter } from 'vue-router'
 const email = ref('')
 const password = ref('')
 const router = useRouter()
+
+const showPassword = ref(false)
+const togglePassword = () => {
+  showPassword.value = !showPassword.value
+}
 
 const handleLogin = async () => {
   try {
@@ -69,6 +81,29 @@ const handleLogin = async () => {
 </script>
 
 <style scoped>
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .auth-input {
+  flex: 1;
+  padding-right: 2.5rem; /* space for the eye icon */
+}
+
+.toggle-eye {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  user-select: none;
+  color: #555;
+}
+
 .auth-page {
   background: linear-gradient(to bottom right, #e6f5e6, #ccf3cc);
   display: flex;
@@ -84,9 +119,11 @@ const handleLogin = async () => {
   border-radius: 1rem;
   box-shadow: 0 8px 20px rgba(0, 128, 0, 0.2);
   text-align: center;
-  width: 100%;
+  width: 90%;
   max-width: 400px;
+  overflow: hidden;
 }
+
 
 .logo {
   width: 80px;
