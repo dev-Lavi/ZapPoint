@@ -169,7 +169,7 @@ const createStation = async () => {
   background: #fff;
   padding: 1.5rem;
   border-right: 1px solid #eee;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease-in-out;
 }
 
 .logo {
@@ -206,7 +206,6 @@ const createStation = async () => {
   border-radius: 12px;
   max-width: 500px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  width: 100%;
 }
 
 .form-group {
@@ -221,7 +220,7 @@ const createStation = async () => {
 
 .form-group input,
 .form-group select {
-  width: 100%;
+  width: 96%;
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -261,27 +260,28 @@ const createStation = async () => {
   color: red;
   font-weight: 500;
 }
+
 /* Hamburger Button */
 .hamburger-btn {
   display: none;
   position: absolute;
   top: 1rem;
   left: 1rem;
-  z-index: 1001;
+  z-index: 1100;
   background: none;
   border: none;
   font-size: 2rem;
   cursor: pointer;
 }
 
-/* Sidebar toggle classes */
-.sidebar {
-  transition: transform 0.3s ease-in-out;
-}
-
+/* Responsive styles */
 @media (max-width: 1024px) {
   .hamburger-btn {
     display: block;
+  }
+
+  .dashboard-view {
+    flex-direction: column;
   }
 
   .sidebar {
@@ -293,22 +293,43 @@ const createStation = async () => {
     background: white;
     z-index: 1000;
     transform: translateX(-100%);
-    border-right: 1px solid #eee;
     padding-top: 4rem;
+    overflow-y: auto;
   }
 
   .sidebar.sidebar-open {
     transform: translateX(0);
   }
 
-  .dashboard-view {
-    flex-direction: column;
-  }
-
   .dashboard-content {
-    margin-top: 3rem;
+    margin-top: 4rem;
     padding: 1rem;
   }
+
+  .station-form {
+    padding: 1.5rem;
+  }
+
+  .dashboard-header h2 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
 }
+
+@media (max-width: 480px) {
+  .station-form {
+    padding: 1rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    padding: 0.6rem;
+  }
+
+  .submit-btn {
+    padding: 0.6rem 1rem;
+  }
+}
+
 
 </style>
