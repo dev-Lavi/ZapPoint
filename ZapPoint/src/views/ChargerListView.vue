@@ -275,9 +275,9 @@ onMounted(fetchStations)
 .sidebar {
   width: 250px;
   background: #fff;
+  padding: 1.5rem;
   border-right: 1px solid #eee;
-  height: 100vh;
-  justify-content: center;
+  transition: transform 0.3s ease-in-out;
 }
 .logo {
   width: 140px;

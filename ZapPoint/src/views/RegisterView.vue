@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div class="auth-page">
     <div class="auth-card">
       <img src="/zappoint-logo.png" alt="Zappoint Logo" class="logo" />
@@ -13,14 +13,21 @@
           pattern="^[\\w.-]+@[\\w.-]+\\.\\w{2,}$"
           title="Please enter a valid email address"
         />
-        <input
-          v-model="password"
-          type="password"
-          placeholder="Password"
-          class="auth-input"
-          required
-          title="Password must be at least 8 characters long and include at least one letter and one number"
-        />
+
+        <div class="password-wrapper">
+          <input
+            v-model="password"
+            :type="showPassword ? 'text' : 'password'"
+            placeholder="Password"
+            class="auth-input"
+            required
+            title="Password must be at least 8 characters long and include at least one letter and one number"
+          />
+          <span class="toggle-eye" @click="togglePassword">
+            {{ showPassword ? '🙈' : '👁️' }}
+          </span>
+        </div>
+
         <button type="submit" class="auth-button">Register</button>
       </form>
       <p class="auth-switch">
@@ -31,6 +38,7 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import axios from 'axios'
@@ -38,6 +46,12 @@ import { useRouter } from 'vue-router'
 
 const email = ref('')
 const password = ref('')
+const showPassword = ref(false)
+const togglePassword = () => {
+  showPassword.value = !showPassword.value
+}
+
+
 const router = useRouter()
 
 const handleRegister = async () => {
@@ -64,6 +78,29 @@ const handleRegister = async () => {
   height: 100vh;
   font-family: 'Poppins', sans-serif;
 }
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .auth-input {
+  flex: 1;
+  padding-right: 2.5rem; /* Prevent overlap with eye */
+}
+
+.toggle-eye {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  user-select: none;
+  color: #555;
+}
+
 
 .auth-card {
   background: white;
