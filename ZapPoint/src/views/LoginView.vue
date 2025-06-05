@@ -45,7 +45,7 @@ const handleLogin = async () => {
       password: password.value,
     })
     
-    // FIX: Token is inside user object, not at root level
+    
     const token = response.data.user.token;
     
     // Store token and user data
@@ -54,7 +54,7 @@ const handleLogin = async () => {
     
     router.push('/dashboard');
   } catch (err) {
-    // Improved error handling
+    
     let errorMessage = 'Login failed';
     if (err && typeof err === 'object' && 'response' in err) {
       const response = (err as any).response;

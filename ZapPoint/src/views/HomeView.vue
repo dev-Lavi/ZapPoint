@@ -21,7 +21,7 @@
     </header>
 
 
-     <!-- Mobile Menu -->
+     
     <div class="mobile-menu" v-if="isMenuOpen">
       <RouterLink to="/" @click="closeMenu">Home</RouterLink>
       <RouterLink to="/features" @click="closeMenu">Features</RouterLink>
@@ -31,7 +31,7 @@
       <RouterLink class="btn-filled" to="/register" @click="closeMenu">Register</RouterLink>
     </div>
 
-    <!-- Hero Section -->
+    
     <section class="hero">
       <div class="hero-text">
         <h1>
@@ -185,14 +185,14 @@ const closeMenu = () => {
   height: auto;
 }
 
-/* Hamburger Icon */
+
 .hamburger {
   display: none;
   font-size: 1.8rem;
   cursor: pointer;
 }
 
-/* Mobile Menu */
+
 .mobile-menu {
   display: none;
   flex-direction: column;
@@ -206,7 +206,7 @@ const closeMenu = () => {
   font-weight: 500;
 }
 
-/* Media Queries */
+
 @media (max-width: 768px) {
   .logo img {
     height: 65px;

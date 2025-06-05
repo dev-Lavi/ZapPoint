@@ -1,11 +1,11 @@
 <template>
   <div class="map-view">
-    <!-- Hamburger for Mobile -->
+    
     <div class="hamburger" @click="toggleSidebar">
       ☰
     </div>
 
-    <!-- Sidebar Navigation -->
+    
     <aside class="sidebar" :class="{ show: isSidebarVisible }">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>
@@ -30,7 +30,7 @@
       </nav>
     </aside>
 
-    <!-- Map Container -->
+    
     <div id="map" class="map-container"></div>
   </div>
 </template>
@@ -47,9 +47,9 @@ const toggleSidebar = () => {
   isSidebarVisible.value = !isSidebarVisible.value
 }
 
-// Custom ZapPoint icon
+
 const customIcon = L.icon({
-  iconUrl: '/zappoint-marker.png', // Make sure this icon exists in `public/`
+  iconUrl: '/zappoint-marker.png', 
   iconSize: [35, 45],
   iconAnchor: [17, 45],
   popupAnchor: [0, -45],
@@ -114,7 +114,7 @@ onMounted(async () => {
   overflow: hidden;
 }
 
-/* Sidebar styles */
+
 .sidebar {
   width: 240px;
   background-color: #1e293b;
@@ -125,14 +125,14 @@ onMounted(async () => {
   transition: transform 0.3s ease-in-out;
 }
 
-/* Logo */
+
 .logo {
   padding-left: 1rem;
   width: 130px;
   margin-bottom: 2rem;
 }
 
-/* Navigation items */
+
 .nav-item {
   display: flex;
   align-items: center;
@@ -153,13 +153,13 @@ onMounted(async () => {
   margin-right: 0.5rem;
 }
 
-/* Map container */
+
 .map-container {
   flex: 1;
   z-index: 1;
 }
 
-/* Hamburger styles */
+
 .hamburger {
   display: none;
   position: absolute;

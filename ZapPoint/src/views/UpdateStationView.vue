@@ -1,11 +1,11 @@
 <template>  
   <div class="dashboard-view">
-    <!-- Hamburger Toggle -->
+    
     <button class="hamburger" @click="isSidebarOpen = !isSidebarOpen">
       ☰
     </button>
 
-    <!-- Sidebar -->
+    
     <aside :class="['sidebar', { 'open': isSidebarOpen }]">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>

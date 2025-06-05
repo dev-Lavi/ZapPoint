@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard-view">
-    <!-- Hamburger for Mobile -->
+    
     <button class="hamburger" @click="toggleSidebar">
       ☰
     </button>
 
-    <!-- Sidebar Navigation -->
+    
     <aside class="sidebar" :class="{ open: isSidebarOpen }">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>
@@ -30,7 +30,7 @@
       </nav>
     </aside>
 
-    <!-- Main Content -->
+    
     <main class="dashboard-content">
       <div class="dashboard-header">
         <h2>Delete Charging Station</h2>
@@ -112,7 +112,7 @@ const deleteStation = async () => {
   flex-direction: row;
 }
 
-/* Sidebar */
+
 .sidebar {
   width: 250px;
   background: #fff;
@@ -137,7 +137,7 @@ const deleteStation = async () => {
   color: #a855f7;
 }
 
-/* Main Content */
+
 .dashboard-content {
   flex: 1;
   padding: 2rem;
@@ -211,7 +211,7 @@ const deleteStation = async () => {
   z-index: 1001;
 }
 
-/* Sidebar animation */
+
 .sidebar {
   transition: transform 0.3s ease-in-out;
 }
