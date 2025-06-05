@@ -269,6 +269,7 @@ const createStation = async () => {
   left: 1rem;
   z-index: 1100;
   background: none;
+  color: #a855f7;
   border: none;
   font-size: 2rem;
   cursor: pointer;

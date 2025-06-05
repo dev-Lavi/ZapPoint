@@ -217,6 +217,7 @@ const updateStation = async () => {
   top: 1rem;
   left: 1rem;
   font-size: 2rem;
+  color: #a855f7;
   background: none;
   border: none;
   cursor: pointer;

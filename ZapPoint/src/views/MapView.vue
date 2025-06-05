@@ -163,10 +163,10 @@ onMounted(async () => {
 .hamburger {
   display: none;
   position: absolute;
-  top: 1rem;
+  top: 2rem;
   left: 1rem;
   z-index: 20;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: white;
   background: #1e293b;
   padding: 0.5rem;
@@ -180,6 +180,7 @@ onMounted(async () => {
     flex-direction: column;
   }
 
+  
   .sidebar {
     position: absolute;
     top: 0;
@@ -200,7 +201,7 @@ onMounted(async () => {
 
   .hamburger {
     display: block;
-    top: 5%;
+    top: 19.4%;
     left: 0.5%;
   }
 }

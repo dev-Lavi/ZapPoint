@@ -1,20 +1,20 @@
 <template>  
   <div class="dashboard-view">
-    
+    <!-- Hamburger Icon -->
     <div class="hamburger" @click="toggleSidebar">
       <span></span>
       <span></span>
       <span></span>
     </div>
 
-   
+    <!-- Sidebar Navigation -->
     <aside :class="['sidebar', { 'collapsed': !isSidebarOpen }]">
       <img src="/zappoint-logo.png" alt="ZapPoint Logo" class="logo" />
       <nav>
         <RouterLink to="/dashboard" class="nav-item active">
           <i class="icon-dashboard" /> Dashboard
         </RouterLink>
-        <RouterLink to="/" class="nav-item"> 
+        <RouterLink to="/" class="nav-item"> <!-- Added Home link -->
           <i class="icon-home" /> Home
         </RouterLink>
         <RouterLink to="/map" class="nav-item">
@@ -32,9 +32,9 @@
       </nav>
     </aside>
 
-   
+    <!-- Main Dashboard -->
     <main class="dashboard-content">
-      
+      <!-- Header with search and profile -->
       <div class="dashboard-header">
                 <input 
           v-model="searchQuery"
@@ -43,7 +43,7 @@
           placeholder="Search by name..." 
         />
 
-        
+        <!-- Filter Controls -->
         <div class="filters">
           <select v-model="statusFilter" class="filter-select">
             <option value="">All Status</option>
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      
+      <!-- Status Summary -->
       <div class="summary-boxes">
         <div class="summary-box">
           <i class="icon-charger" />
@@ -145,7 +145,7 @@ const toggleSidebar = () => {
 const stations = ref([])
 const loading = ref(true)
 const error = ref(null)
-
+// Reactive data
 const searchQuery = ref('')
 const statusFilter = ref('')
 const powerFilter = ref('')
@@ -170,7 +170,7 @@ const fetchStations = async () => {
       }
     });
     
-    
+    // Log response for debugging
     console.log('Response status:', response.status);
     
     if (response.status === 401) {
@@ -187,11 +187,11 @@ const fetchStations = async () => {
       throw new Error(`API error: ${response.status} - ${errorText}`);
     }
     
-    
+    // Parse response and log for debugging
     const responseData = await response.json();
     console.log('API response data:', responseData);
     
-    
+    // FIX: Handle different response structures
     if (Array.isArray(responseData)) {
       stations.value = responseData;
     } else if (Array.isArray(responseData.stations)) {
@@ -211,12 +211,12 @@ const fetchStations = async () => {
   }
 }
 
-
+// Computed properties for station counts
 const totalStations = computed(() => stations.value.length)
 const activeStations = computed(() => stations.value.filter(s => s.status === 'Active' || s.isActive).length)
 const inactiveStations = computed(() => stations.value.filter(s => s.status === 'Inactive' || !s.isActive).length)
 
-
+// Computed properties for filters
 const uniquePowerLevels = computed(() => {
   const powers = stations.value.map(s => s.powerOutput)
   return [...new Set(powers)].sort((a, b) => a - b)
@@ -255,19 +255,19 @@ const filteredStations = computed(() => {
 //   }
 // }
 
-
+// Fetch data on component mount
 onMounted(fetchStations)
 </script>
 
 <style scoped>
-
+/* Add loading indicator style */
 .loading {
   text-align: center;
   padding: 2rem;
   color: #666;
 }
 
-
+/* Existing styles unchanged */
 .dashboard-view {
   display: flex;
   font-family: 'Poppins', sans-serif;
@@ -275,9 +275,9 @@ onMounted(fetchStations)
 .sidebar {
   width: 250px;
   background: #fff;
-  padding: 1.5rem;
   border-right: 1px solid #eee;
   height: 100vh;
+  justify-content: center;
 }
 .logo {
   width: 140px;
@@ -368,7 +368,7 @@ onMounted(fetchStations)
 }
 
 
-
+/* Add filter styles */
 .filters {
   display: flex;
   gap: 10px;
@@ -383,7 +383,7 @@ onMounted(fetchStations)
   cursor: pointer;
 }
 
-
+/* Station details styling */
 .station-details {
   display: flex;
   gap: 15px;
@@ -391,7 +391,7 @@ onMounted(fetchStations)
   font-size: 0.8rem;
   color: #666;
 }
-
+/* Adjust header layout */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -400,7 +400,7 @@ onMounted(fetchStations)
   gap: 15px;
 }
 
-
+/* Base adjustments */
 .dashboard-view {
   min-height: 100vh;
   overflow-x: hidden;
