@@ -4,7 +4,7 @@ import { computed } from 'vue'
 
 const route = useRoute()
 
-// Show header only on login or register routes
+
 const showHeader = computed(() => ['login', 'register'].includes(route.name))
 </script>
 

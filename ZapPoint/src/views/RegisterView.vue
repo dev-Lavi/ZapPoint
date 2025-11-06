@@ -87,7 +87,7 @@ const handleRegister = async () => {
 
 .password-wrapper .auth-input {
   flex: 1;
-  padding-right: 2.5rem; /* Prevent overlap with eye */
+  padding-right: 2.5rem; 
 }
 
 .toggle-eye {

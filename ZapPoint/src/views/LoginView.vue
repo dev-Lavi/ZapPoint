@@ -60,7 +60,7 @@ const handleLogin = async () => {
     
     const token = response.data.user.token;
     
-    // Store token and user data
+    
     localStorage.setItem('authToken', token);
     localStorage.setItem('user', JSON.stringify(response.data.user));
     
@@ -90,7 +90,7 @@ const handleLogin = async () => {
 
 .password-wrapper .auth-input {
   flex: 1;
-  padding-right: 2.5rem; /* space for the eye icon */
+  padding-right: 2.5rem; 
 }
 
 .toggle-eye {

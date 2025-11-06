@@ -8,6 +8,7 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import stationRoutes from './routes/stationRoutes.js';
 import https from 'https';
+import emergencyRoutes from './routes/emergencyRoutes.js'
 
 setInterval(() => {
   https.get('https://zappoint.onrender.com/ping');
@@ -49,6 +50,7 @@ app.get('/ping', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/stations', stationRoutes);
+app.use('/api/emergency', emergencyRoutes)
 
 // 404 handler
 app.use((req, res) => {

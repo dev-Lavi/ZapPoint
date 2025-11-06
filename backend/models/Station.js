@@ -8,7 +8,26 @@ const stationSchema = new mongoose.Schema({
   },
   status: { type: String, enum: ['Active', 'Inactive'], default: 'Active' },
   powerOutput: { type: Number, required: true },
-  connectorType: { type: String, required: true },
+  connectorType: {
+    type: String,
+    required: true,
+    enum: [
+      'Type 1',
+      'Type 2', 
+      'Type 3',
+      'Type c',
+      'Type1',
+      'type 1',
+      'type 2',
+      'type 3',
+      'type c',
+      'type1',
+      'CHAdeMO',
+      'CCS',
+      'Type',
+      'Tesla'
+    ]
+  },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 }, { timestamps: true })
 
